@@ -14,6 +14,7 @@ const router = express.Router();
 router.post("/register", register);
 router.post("/login", loginLocal);
 router.post("/logout", logout);
+router.get("/logout", logout);
 router.get("/me", getCurrentUser);
 
 // Google OAuth
