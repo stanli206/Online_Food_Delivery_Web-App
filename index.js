@@ -8,6 +8,8 @@ import sessionConfig from "./config/sessionConfig.js";
 import passport, { configurePassport } from "./config/passport.js";
 
 import authRoutes from "./Routes/authRoutes.js";
+import restaurantRoutes from "./Routes/restaurantRoutes.js";
+import menuRoutes from "./Routes/menuRoutes.js";
 import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 
 dotenv.config();
@@ -37,6 +39,8 @@ app.use(passport.session());
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/restaurants", restaurantRoutes);
+app.use("/api/menu", menuRoutes);
 
 // Health check
 app.get("/", (req, res) => {
