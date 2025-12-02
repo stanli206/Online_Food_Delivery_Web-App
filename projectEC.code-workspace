@@ -1,11 +1,13 @@
 {
-	"folders": [
-		{
-			"path": "../projectEC"
-		},
-		{
-			"path": "."
-		}
-	],
-	"settings": {}
+  "folders": [
+    {
+      "path": "../projectEC"
+    },
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "liveServer.settings.multiRootWorkspaceName": "projectecbackend"
+  }
 }

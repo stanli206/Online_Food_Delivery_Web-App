@@ -1,4 +1,3 @@
-// services/restaurantService.js
 import Restaurant from "../models/Restaurant.js";
 
 export const createRestaurant = async (data) => {

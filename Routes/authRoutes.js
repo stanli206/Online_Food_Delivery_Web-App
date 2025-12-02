@@ -1,4 +1,3 @@
-// routes/authRoutes.js
 import express from "express";
 import {
   register,
@@ -30,7 +29,7 @@ router.get(
     session: true,
   }),
   (req, res) => {
-    // After successful OAuth, redirect to frontend (React app) with maybe query param
+    
     const redirectUrl = `${process.env.CLIENT_URL}/oauth-success`;
     res.redirect(redirectUrl);
   }

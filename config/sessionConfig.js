@@ -1,4 +1,3 @@
-// config/sessionConfig.js
 import session from "express-session";
 import MongoStore from "connect-mongo";
 
@@ -15,7 +14,7 @@ const sessionConfig = () => {
     }),
     cookie: {
       httpOnly: true,
-      secure: isProduction,      // true only in https
+      secure: isProduction,    
       maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
     }
   });

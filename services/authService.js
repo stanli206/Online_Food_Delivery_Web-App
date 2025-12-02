@@ -1,10 +1,9 @@
-// services/authService.js
 import bcrypt from "bcryptjs";
 import User from "../models/User.js";
 
 const SALT_ROUNDS = 10;
 
-// user register (local)
+
 export const registerUser = async ({ name, email, password }) => {
   const existing = await User.findOne({ email });
   if (existing) {
@@ -23,7 +22,7 @@ export const registerUser = async ({ name, email, password }) => {
   return user;
 };
 
-// local login – just verify; Passport local strategy will also use similar logic
+
 export const validateUserCredentials = async ({ email, password }) => {
   const user = await User.findOne({ email });
   if (!user || !user.password) {
@@ -38,12 +37,12 @@ export const validateUserCredentials = async ({ email, password }) => {
   return user;
 };
 
-// OAuth helper: find or create user by Google profile
+
 export const findOrCreateOAuthUser = async ({ provider, oauthId, email, name }) => {
   let user = await User.findOne({ email });
 
   if (user) {
-    // if already exists but no oauth data, update it
+    
     if (!user.oauthProvider) {
       user.oauthProvider = provider;
       user.oauthId = oauthId;

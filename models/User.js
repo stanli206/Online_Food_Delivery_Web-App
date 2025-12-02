@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      // can be null for users created from Google OAuth
+      
     },
     role: {
       type: String,
@@ -34,8 +34,8 @@ const userSchema = new mongoose.Schema(
       default: "user",
     },
     phone: String,
-    oauthProvider: String,   // 'google' etc
-    oauthId: String,         // Google profile id
+    oauthProvider: String,   
+    oauthId: String,         
     addresses: [addressSchema],
   },
   { timestamps: true }

@@ -1,4 +1,3 @@
-// controllers/authController.js
 import passport from "passport";
 import { registerUser } from "../services/authService.js";
 
@@ -12,7 +11,7 @@ export const register = async (req, res, next) => {
 
     const user = await registerUser({ name, email, password });
 
-    // Option: auto-login after register
+  
     req.login(user, (err) => {
       if (err) return next(err);
       return res.status(201).json({
@@ -30,7 +29,7 @@ export const register = async (req, res, next) => {
   }
 };
 
-// Local login using passport.authenticate
+// Local login using passport
 export const loginLocal = (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) return next(err);

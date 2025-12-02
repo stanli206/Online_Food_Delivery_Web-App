@@ -1,4 +1,3 @@
-// services/menuService.js
 import MenuItem from "../models/MenuItem.js";
 
 export const createMenuItem = async (restaurantId, data) => {

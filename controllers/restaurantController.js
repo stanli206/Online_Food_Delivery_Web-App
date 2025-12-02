@@ -1,4 +1,3 @@
-// controllers/restaurantController.js
 import {
   createRestaurant,
   getAllRestaurants,

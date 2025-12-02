@@ -1,4 +1,3 @@
-// controllers/menuController.js
 import {
   createMenuItem,
   getMenuByRestaurant,

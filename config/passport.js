@@ -1,12 +1,13 @@
-// config/passport.js
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import User from "../models/User.js";
-import { validateUserCredentials, findOrCreateOAuthUser } from "../services/authService.js";
+import {
+  validateUserCredentials,
+  findOrCreateOAuthUser,
+} from "../services/authService.js";
 
 export const configurePassport = () => {
-  // Local Strategy
   passport.use(
     new LocalStrategy(
       {
@@ -24,7 +25,7 @@ export const configurePassport = () => {
     )
   );
 
-  // Google OAuth Strategy
+  // Google OAuth
   passport.use(
     new GoogleStrategy(
       {

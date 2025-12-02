@@ -1,4 +1,3 @@
-// server.js
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -10,6 +9,10 @@ import passport, { configurePassport } from "./config/passport.js";
 import authRoutes from "./Routes/authRoutes.js";
 import restaurantRoutes from "./Routes/restaurantRoutes.js";
 import menuRoutes from "./Routes/menuRoutes.js";
+import cartRoutes from "./Routes/cartRoutes.js";
+import orderRoutes from "./Routes/orderRoutes.js";
+import adminOrderRoutes from "./Routes/adminOrderRoutes.js";
+
 import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 
 dotenv.config();
@@ -23,7 +26,8 @@ connectDB();
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
-    credentials: true, // important for cookies
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
   })
 );
 app.use(morgan("dev"));
@@ -41,8 +45,10 @@ app.use(passport.session());
 app.use("/api/auth", authRoutes);
 app.use("/api/restaurants", restaurantRoutes);
 app.use("/api/menu", menuRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/api/admin/orders", adminOrderRoutes);
 
-// Health check
 app.get("/", (req, res) => {
   res.send("Food Delivery API running...");
 });

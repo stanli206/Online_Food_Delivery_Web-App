@@ -1,4 +1,3 @@
-// routes/restaurantRoutes.js
 import express from "express";
 import {
   createRestaurantController,

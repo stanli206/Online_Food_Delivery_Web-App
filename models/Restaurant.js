@@ -16,10 +16,10 @@ const restaurantSchema = new mongoose.Schema(
     name: { type: String, required: true },
     description: String,
     address: addressSchema,
-    image: String,          // Cloudinary URL later
-    cuisines: [String],     // ['South Indian', 'Chinese']
+    image: String,          
+    cuisines: [String],     
     rating: { type: Number, default: 0 },
-    deliveryTime: Number,   // in minutes
+    deliveryTime: Number,   
     isActive: { type: Boolean, default: true },
   },
   { timestamps: true }
