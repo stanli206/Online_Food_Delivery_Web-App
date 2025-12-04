@@ -4,7 +4,7 @@ import { ensureAuthenticated } from "../middlewares/authMiddleware.js";
 import {
   createStripeSessionController,
   confirmStripeOrderController,
-} from "../controllers/PaymentController.js";
+} from "../controllers/paymentController.js";
 
 const router = express.Router();
 
