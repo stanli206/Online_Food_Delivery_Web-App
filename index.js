@@ -12,7 +12,7 @@ import menuRoutes from "./Routes/menuRoutes.js";
 import cartRoutes from "./Routes/cartRoutes.js";
 import orderRoutes from "./Routes/orderRoutes.js";
 import adminOrderRoutes from "./Routes/adminOrderRoutes.js";
-
+import paymentRoutes from "./Routes/paymentRoutes.js";
 import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 
 dotenv.config();
@@ -48,6 +48,8 @@ app.use("/api/menu", menuRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/admin/orders", adminOrderRoutes);
+app.use("/api/payments", paymentRoutes);
+
 
 app.get("/", (req, res) => {
   res.send("Food Delivery API running...");
