@@ -15,7 +15,8 @@ const sessionConfig = () => {
     cookie: {
       httpOnly: true,
       secure: isProduction,    
-      maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+      sameSite: isProd ? "none" : "lax", 
     }
   });
 };
