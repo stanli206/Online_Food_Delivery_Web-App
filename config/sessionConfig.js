@@ -3,6 +3,10 @@ import MongoStore from "connect-mongo";
 
 const sessionConfig = () => {
   const isProduction = process.env.NODE_ENV === "production";
+  if (isProduction) {
+    // Render / other proxies la irukkum, cookie secure logic correct aagum
+    app.set("trust proxy", 1);
+  }
 
   return session({
     secret: process.env.SESSION_SECRET,
