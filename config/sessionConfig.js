@@ -3,10 +3,6 @@ import MongoStore from "connect-mongo";
 
 const sessionConfig = () => {
   const isProduction = process.env.NODE_ENV === "production";
-  if (isProduction) {
-    // Render / other proxies la irukkum, cookie secure logic correct aagum
-    app.set("trust proxy", 1);
-  }
 
   return session({
     secret: process.env.SESSION_SECRET,
@@ -18,9 +14,9 @@ const sessionConfig = () => {
     }),
     cookie: {
       httpOnly: true,
-      secure: isProduction,
-      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
-      sameSite: isProduction ? "none" : "lax",
+      secure: isProduction,                 // HTTPS only in prod
+      sameSite: isProduction ? "none" : "lax", // cross-site Netlify <-> Render
+      maxAge: 1000 * 60 * 60 * 24 * 7,
     },
   });
 };

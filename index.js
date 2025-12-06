@@ -19,6 +19,10 @@ dotenv.config();
 
 const app = express();
 
+const isProduction = process.env.NODE_ENV === "production";
+if (isProduction) {
+  app.set("trust proxy", 1); // 🟢 VERY IMPORTANT on Render
+}
 // DB connect
 connectDB();
 
@@ -49,7 +53,6 @@ app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/admin/orders", adminOrderRoutes);
 app.use("/api/payments", paymentRoutes);
-
 
 app.get("/", (req, res) => {
   res.send("Food Delivery API running...");
