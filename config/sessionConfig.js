@@ -14,8 +14,8 @@ const sessionConfig = () => {
     }),
     cookie: {
       httpOnly: true,
-      secure: isProduction,                 // HTTPS only in prod
-      sameSite: isProduction ? "none" : "lax", // cross-site Netlify <-> Render
+      secure: isProduction,
+      sameSite: "none",
       maxAge: 1000 * 60 * 60 * 24 * 7,
     },
   });
