@@ -21,7 +21,7 @@ const app = express();
 
 const isProduction = process.env.NODE_ENV === "production";
 if (isProduction) {
-  app.set("trust proxy", 1); // 🟢 VERY IMPORTANT on Render
+  app.set("trust proxy", 1); // VERY IMPORTANT on Render
 }
 // DB connect
 connectDB();
@@ -29,10 +29,12 @@ connectDB();
 // Middlewares
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin:
+      process.env.CLIENT_URL ||
+      "http://wondery-stone-paper-scissors-ui.s3-website-eu-north-1.amazonaws.com",
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
-  })
+  }),
 );
 app.use(morgan("dev"));
 app.use(express.json());
