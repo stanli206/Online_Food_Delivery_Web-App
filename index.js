@@ -29,9 +29,7 @@ connectDB();
 // Middlewares
 app.use(
   cors({
-    origin:
-      process.env.CLIENT_URL ||
-      "http://wondery-stone-paper-scissors-ui.s3-website-eu-north-1.amazonaws.com",
+    origin: "*",
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   }),
