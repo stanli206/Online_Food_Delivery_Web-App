@@ -17,22 +17,26 @@ router.get("/logout", logout);
 router.get("/me", getCurrentUser);
 
 // Google OAuth
-router.get(
-  "/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
-);
+router.get("/google", (req, res, next) => {
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+    prompt: "select_account",
+    accessType: "offline",
+  })(req, res, next);
+});
 
 router.get(
   "/google/callback",
-  passport.authenticate("google", {
-    failureRedirect: "/auth/google/failure",
-    session: true,
-  }),
+  (req, res, next) => {
+    passport.authenticate("google", {
+      failureRedirect: `${process.env.CLIENT_URL}/login?error=google_failed`,
+      session: true,
+    })(req, res, next);
+  },
   (req, res) => {
-    
     const redirectUrl = `${process.env.CLIENT_URL}/oauth-success`;
     res.redirect(redirectUrl);
-  }
+  },
 );
 
 router.get("/google/failure", (req, res) => {
