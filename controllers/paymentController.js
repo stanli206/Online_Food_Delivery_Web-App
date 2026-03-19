@@ -4,7 +4,7 @@ import { createOrderFromCart } from "../services/orderService.js";
 export const createStripeSessionController = async (req, res, next) => {
   try {
     const userId = req.user._id;
-    const { deliveryAddress } = req.body; // 👈 from frontend
+    const { deliveryAddress } = req.body; // 
 
     if (!deliveryAddress) {
       const error = new Error("Delivery address required for Stripe payment");
@@ -36,7 +36,7 @@ export const createStripeSessionController = async (req, res, next) => {
 export const confirmStripeOrderController = async (req, res, next) => {
   try {
     const userId = req.user._id;
-    const deliveryAddress = req.session.stripeDeliveryAddress; // 👈 from session
+    const deliveryAddress = req.session.stripeDeliveryAddress; // from session
 
     if (!deliveryAddress) {
       const error = new Error("No delivery address found for Stripe order");

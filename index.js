@@ -29,9 +29,7 @@ connectDB();
 // Middlewares
 app.use(
   cors({
-    origin:
-      "http://wondery-stone-paper-scissors-ui.s3-website.eu-north-1.amazonaws.com",
-    //process.env.CLIENT_URL,
+    origin:"https://d35zdt7un4rv3c.cloudfront.net",   
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   }),
@@ -66,3 +64,5 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// "http://wondery-stone-paper-scissors-ui.s3-website.eu-north-1.amazonaws.com",
+//process.env.CLIENT_URL,
