@@ -27,9 +27,12 @@ if (isProduction) {
 connectDB();
 
 // Middlewares
+// process.env.CLIENT_URL ||
+//       "http://wondery-stone-paper-scissors-ui.s3-website-eu-north-1.amazonaws.com"
 app.use(
   cors({
-    origin: "*",
+    origin:
+      "http://wondery-stone-paper-scissors-ui.s3-website-eu-north-1.amazonaws.com",
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   }),
