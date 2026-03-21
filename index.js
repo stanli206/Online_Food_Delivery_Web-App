@@ -29,7 +29,7 @@ connectDB();
 // Middlewares
 app.use(
   cors({
-    origin:"https://d35zdt7un4rv3c.cloudfront.net",   
+    origin: process.env.CLIENT_URL,   
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   }),
