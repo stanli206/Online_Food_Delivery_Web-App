@@ -21,21 +21,35 @@ const app = express();
 
 const isProduction = process.env.NODE_ENV === "production";
 if (isProduction) {
-  app.set("trust proxy", 1); // VERY IMPORTANT on Render
+  app.set("trust proxy", 1); 
 }
 // DB connect
 connectDB();
 
 // Middlewares
-console.log("CLIENT_URL:", process.env.CLIENT_URL);
+// console.log("CLIENT_URL:", process.env.CLIENT_URL);
+const allowedOrigins = process.env.CLIENT_URL.split(",");
 
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,   
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("CORS blocked"));
+      }
+    },
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   }),
 );
+// app.use(
+//   cors({
+//     origin: process.env.CLIENT_URL,
+//     methods: "GET,POST,PUT,DELETE",
+//     credentials: true,
+//   }),
+// );
 app.use(morgan("dev"));
 app.use(express.json());
 
@@ -66,5 +80,3 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-// "http://wondery-stone-paper-scissors-ui.s3-website.eu-north-1.amazonaws.com",
-//process.env.CLIENT_URL,
