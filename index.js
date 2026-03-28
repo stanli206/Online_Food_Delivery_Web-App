@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import cors from "cors";
 import morgan from "morgan";
 import connectDB from "./config/db.js";
-// import sessionConfig from "./config/sessionConfig.js";
 import passport, { configurePassport } from "./config/passport.js";
 
 import authRoutes from "./Routes/authRoutes.js";
@@ -26,8 +25,6 @@ if (isProduction) {
 // DB connect
 connectDB();
 
-// Middlewares
-// console.log("CLIENT_URL:", process.env.CLIENT_URL);
 const allowedOrigins = process.env.CLIENT_URL.split(",");
 
 app.use(
@@ -43,23 +40,15 @@ app.use(
     credentials: true,
   }),
 );
-// app.use(
-//   cors({
-//     origin: process.env.CLIENT_URL,
-//     methods: "GET,POST,PUT,DELETE",
-//     credentials: true,
-//   }),
-// );
+
 app.use(morgan("dev"));
 app.use(express.json());
 
 // Sessions
 // app.use(sessionConfig());
-
 // Passport
 configurePassport();
 app.use(passport.initialize());
-// app.use(passport.session());
 
 // Routes
 app.use("/api/auth", authRoutes);

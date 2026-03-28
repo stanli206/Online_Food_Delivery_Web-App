@@ -1,4 +1,3 @@
-// routes/paymentRoutes.js
 import express from "express";
 import { adminOnly } from "../middlewares/authMiddleware.js";
 import {

@@ -12,7 +12,7 @@ const menuItemSchema = new mongoose.Schema(
     price: { type: Number, required: true },
     image: String,
     isVeg: { type: Boolean, default: true },
-    category: String,      // "Starter", "Main Course", etc.
+    category: String,      
     available: { type: Boolean, default: true },
   },
   { timestamps: true }

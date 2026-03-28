@@ -62,23 +62,3 @@ export const logout = (req, res) => {
 export const getCurrentUser = async (req, res) => {
   return res.json({ user: req.user });
 };
-
-// export const logout = (req, res, next) => {
-//   req.logout((err) => {
-//     if (err) return next(err);
-
-//     req.session.destroy((err2) => {
-//       if (err2) return next(err2);
-//       res.clearCookie("connect.sid");
-//       return res.json({ message: "Logged out successfully" });
-//     });
-//   });
-// };
-
-// export const getCurrentUser = (req, res) => {
-//   if (!req.user) {
-//     return res.status(401).json({ message: "Not authenticated" });
-//   }
-
-//   return res.json({ user: req.user });
-// };
