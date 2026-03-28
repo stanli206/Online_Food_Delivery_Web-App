@@ -9,6 +9,9 @@ import {
 export const createRestaurantController = async (req, res, next) => {
   try {
     const data = req.body;
+    console.log("daRequest Data:", data);
+        console.log("👤 Logged-in User:", req.user);
+
     const restaurant = await createRestaurant(data);
     res.status(201).json({ restaurant });
   } catch (err) {

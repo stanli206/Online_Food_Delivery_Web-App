@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import morgan from "morgan";
 import connectDB from "./config/db.js";
-import sessionConfig from "./config/sessionConfig.js";
+// import sessionConfig from "./config/sessionConfig.js";
 import passport, { configurePassport } from "./config/passport.js";
 
 import authRoutes from "./Routes/authRoutes.js";
@@ -54,12 +54,12 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 // Sessions
-app.use(sessionConfig());
+// app.use(sessionConfig());
 
 // Passport
 configurePassport();
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
 
 // Routes
 app.use("/api/auth", authRoutes);

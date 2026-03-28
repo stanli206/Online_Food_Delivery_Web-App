@@ -5,12 +5,12 @@ import {
   getOrderByIdController,
   updateOrderStatusController,
 } from "../controllers/orderController.js";
-import { ensureAdmin } from "../middlewares/authMiddleware.js";
+import { adminOnly } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
 // all routes here admin-only
-router.use(ensureAdmin);
+router.use(adminOnly);
 
 // GET /api/admin/orders
 router.get("/", getAllOrdersController);

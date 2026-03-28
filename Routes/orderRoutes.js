@@ -5,11 +5,11 @@ import {
   getMyOrdersController,
   getOrderByIdController,
 } from "../controllers/orderController.js";
-import { ensureAuthenticated } from "../middlewares/authMiddleware.js";
+import { adminOnly } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.use(ensureAuthenticated);
+router.use(adminOnly);
 
 // create order from cart
 router.post("/", createOrderController);
