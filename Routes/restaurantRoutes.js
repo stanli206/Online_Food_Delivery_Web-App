@@ -6,17 +6,16 @@ import {
   updateRestaurantController,
   deleteRestaurantController,
 } from "../controllers/restaurantController.js";
-import { ensureAdmin } from "../middlewares/authMiddleware.js";
+import { adminOnly, protect } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-// Public list & detail
 router.get("/", getRestaurantsController);
 router.get("/:id", getRestaurantByIdController);
 
-// Admin only
-router.post("/", ensureAdmin, createRestaurantController);
-router.put("/:id", ensureAdmin, updateRestaurantController);
-router.delete("/:id", ensureAdmin, deleteRestaurantController);
+
+router.post("/", protect, adminOnly, createRestaurantController);
+router.put("/:id", protect, adminOnly, updateRestaurantController);
+router.delete("/:id", protect, adminOnly, deleteRestaurantController);
 
 export default router;

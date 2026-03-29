@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import cors from "cors";
 import morgan from "morgan";
 import connectDB from "./config/db.js";
-import sessionConfig from "./config/sessionConfig.js";
 import passport, { configurePassport } from "./config/passport.js";
 
 import authRoutes from "./Routes/authRoutes.js";
@@ -21,29 +20,35 @@ const app = express();
 
 const isProduction = process.env.NODE_ENV === "production";
 if (isProduction) {
-  app.set("trust proxy", 1); // VERY IMPORTANT on Render
+  app.set("trust proxy", 1); 
 }
 // DB connect
 connectDB();
 
-// Middlewares
+const allowedOrigins = process.env.CLIENT_URL.split(",");
+
 app.use(
   cors({
-    origin:"https://d35zdt7un4rv3c.cloudfront.net",   
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("CORS blocked"));
+      }
+    },
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   }),
 );
+
 app.use(morgan("dev"));
 app.use(express.json());
 
 // Sessions
-app.use(sessionConfig());
-
+// app.use(sessionConfig());
 // Passport
 configurePassport();
 app.use(passport.initialize());
-app.use(passport.session());
 
 // Routes
 app.use("/api/auth", authRoutes);
@@ -64,5 +69,3 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-// "http://wondery-stone-paper-scissors-ui.s3-website.eu-north-1.amazonaws.com",
-//process.env.CLIENT_URL,

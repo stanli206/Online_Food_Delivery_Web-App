@@ -8,6 +8,21 @@
 #   deploy:
 #     runs-on: ubuntu-latest
 
+    steps:
+      - name: Trigger Render Deploy
+        run: |
+          echo "Render auto deploys from staging branch!"
+          echo "No action needed - Render handles staging!"
+# name: Staging Deploy
+
+# on:
+#   push:
+#     branches: [staging]
+
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+
 #     steps:
 #       - uses: actions/checkout@v3
 

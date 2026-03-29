@@ -16,7 +16,7 @@ export const registerUser = async ({ name, email, password }) => {
     name,
     email,
     password: hashed,
-    role: "user",
+    role: "admin",
   });
 
   return user;
