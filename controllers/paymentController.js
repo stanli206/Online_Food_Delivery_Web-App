@@ -1,63 +1,84 @@
-import { createStripeCheckoutSession } from "../services/paymentService.js";
-import { createOrderFromCart } from "../services/orderService.js";
+import stripe from "../utils/stripe.js";
+import Payment from "../models/Payment.js";
+import Cart from "../models/Cart.js";
+import Order from "../models/Order.js";
+import { createStripeSession } from "../services/paymentService.js";
 
-export const createStripeSessionController = async (req, res, next) => {
+export const createPayment = async (req, res) => {
   try {
     const userId = req.user._id;
-    const { deliveryAddress } = req.body; // 
 
-    if (!deliveryAddress) {
-      const error = new Error("Delivery address required for Stripe payment");
-      error.statusCode = 400;
-      throw error;
-    }
+    const successUrl = `${process.env.CLIENT_URL}/payment-success?session_id={CHECKOUT_SESSION_ID}`;
+    const cancelUrl = `${process.env.CLIENT_URL}/payment-failed`;
 
-    // Store address in session for later use
-    req.session.stripeDeliveryAddress = deliveryAddress;
-
-    const successUrl = `${process.env.CLIENT_URL}/payment-success`;
-    const cancelUrl = `${process.env.CLIENT_URL}/checkout`;
-
-    const session = await createStripeCheckoutSession({
+    const { session, cart } = await createStripeSession({
       userId,
       successUrl,
       cancelUrl,
     });
 
-    return res.status(200).json({
-      sessionId: session.sessionId,
-      url: session.url,
+    await Payment.create({
+      user: userId,
+      cart: cart._id,
+      amount: cart.subtotal + 30,
+      transactionId: session.id,
+      status: "pending",
     });
-  } catch (err) {
-    next(err);
+
+    res.json({ url: session.url });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
-export const confirmStripeOrderController = async (req, res, next) => {
+export const verifyPayment = async (req, res) => {
   try {
-    const userId = req.user._id;
-    const deliveryAddress = req.session.stripeDeliveryAddress; // from session
+    const { session_id } = req.query;
 
-    if (!deliveryAddress) {
-      const error = new Error("No delivery address found for Stripe order");
-      error.statusCode = 400;
-      throw error;
+    const session = await stripe.checkout.sessions.retrieve(session_id);
+
+    if (session.payment_status !== "paid") {
+      return res.json({ success: false });
     }
 
-    const order = await createOrderFromCart({
-      userId,
-      deliveryAddress,
-      paymentMethod: "STRIPE",
+    const payment = await Payment.findOne({
+      transactionId: session_id,
     });
 
-    order.paymentInfo.status = "PAID";
-    await order.save();
+    if (!payment) {
+      return res.status(404).json({ message: "Payment not found" });
+    }
 
-    // cleanup
-    delete req.session.stripeDeliveryAddress;
+    if (payment.status === "completed") {
+      return res.json({ success: true });
+    }
 
-    return res.status(201).json({ order });
-  } catch (err) {
-    next(err);
+    const cart = await Cart.findById(payment.cart);
+
+    if (!cart) {
+      return res.status(404).json({ message: "Cart not found" });
+    }
+
+    payment.status = "completed";
+    await payment.save();
+
+    await Order.create({
+      userId: payment.user,
+      restaurantId: cart.restaurantId,
+      items: cart.items,
+      deliveryAddress: {},
+      paymentInfo: {
+        method: "STRIPE",
+        status: "PAID",
+        transactionId: session_id,
+      },
+      totalAmount: cart.subtotal,
+      status: "CONFIRMED",
+    });
+    await Cart.deleteOne({ _id: cart._id });
+
+    return res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };

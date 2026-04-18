@@ -9,8 +9,14 @@ export const createMenuItemController = async (req, res, next) => {
   try {
     const { restaurantId } = req.params;
     const data = req.body;
-    const item = await createMenuItem(restaurantId, data);
-    res.status(201).json({ item });
+    console.log("REQ BODY:", req.body);
+
+    const result = await createMenuItem(restaurantId, data);
+
+    res.status(201).json({
+      message: "Menu item(s) created successfully",
+      data: result,
+    });
   } catch (err) {
     next(err);
   }

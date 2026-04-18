@@ -20,6 +20,8 @@ export const addToCartController = async (req, res, next) => {
   try {
     const userId = req.user._id;
     const { restaurantId, menuItemId, quantity } = req.body;
+    console.log("hbihbbibibiin user id " + userId);
+     console.log("BODY:", req.body);
 
     if (!restaurantId || !menuItemId) {
       return res

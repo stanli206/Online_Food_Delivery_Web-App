@@ -1,4 +1,3 @@
-// controllers/orderController.js
 import {
   createOrderFromCart,
   getUserOrders,
@@ -7,7 +6,6 @@ import {
   updateOrderStatusService,
 } from "../services/orderService.js";
 
-// USER: create order from cart
 export const createOrderController = async (req, res, next) => {
   try {
     const userId = req.user._id;
@@ -31,7 +29,6 @@ export const createOrderController = async (req, res, next) => {
   }
 };
 
-// USER: get my orders
 export const getMyOrdersController = async (req, res, next) => {
   try {
     const userId = req.user._id;
@@ -42,7 +39,6 @@ export const getMyOrdersController = async (req, res, next) => {
   }
 };
 
-// USER/ADMIN: get single order
 export const getOrderByIdController = async (req, res, next) => {
   try {
     const userId = req.user._id;
@@ -54,7 +50,6 @@ export const getOrderByIdController = async (req, res, next) => {
       return res.status(404).json({ message: "Order not found" });
     }
 
-    // If not admin, user can see only own order
     if (!isAdmin && order.userId.toString() !== userId.toString()) {
       return res.status(403).json({ message: "Not allowed to view this order" });
     }
@@ -65,7 +60,6 @@ export const getOrderByIdController = async (req, res, next) => {
   }
 };
 
-// ADMIN: get all orders
 export const getAllOrdersController = async (req, res, next) => {
   try {
     const orders = await getAllOrders();
@@ -75,7 +69,6 @@ export const getAllOrdersController = async (req, res, next) => {
   }
 };
 
-// ADMIN: update status
 export const updateOrderStatusController = async (req, res, next) => {
   try {
     const { id } = req.params;

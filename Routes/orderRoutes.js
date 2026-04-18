@@ -4,11 +4,11 @@ import {
   getMyOrdersController,
   getOrderByIdController,
 } from "../controllers/orderController.js";
-import { adminOnly } from "../middlewares/authMiddleware.js";
+import { adminOnly, protect } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.use(adminOnly);
+router.use(protect);
 
 router.post("/", createOrderController);
 

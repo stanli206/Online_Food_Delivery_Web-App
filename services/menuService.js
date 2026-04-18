@@ -1,11 +1,21 @@
 import MenuItem from "../models/MenuItem.js";
 
 export const createMenuItem = async (restaurantId, data) => {
-  const menuItem = await MenuItem.create({
-    ...data,
+  const itemsData = data.data ? data.data : data;
+
+  if (Array.isArray(itemsData)) {
+    const formattedData = itemsData.map((item) => ({
+      ...item,
+      restaurantId,
+    }));
+
+    return await MenuItem.insertMany(formattedData);
+  }
+
+  return await MenuItem.create({
+    ...itemsData,
     restaurantId,
   });
-  return menuItem;
 };
 
 export const getMenuByRestaurant = async (restaurantId) => {
