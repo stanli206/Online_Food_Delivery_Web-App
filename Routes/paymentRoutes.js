@@ -1,16 +1,10 @@
 import express from "express";
-import { adminOnly } from "../middlewares/authMiddleware.js";
-import {
-  createStripeSessionController,
-  confirmStripeOrderController,
-} from "../controllers/paymentController.js";
+import { createPayment, verifyPayment } from "../controllers/paymentController.js";
+import { protect } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.use(adminOnly);
-
-router.post("/stripe/create-session", createStripeSessionController);
-
-router.post("/stripe/confirm-order", confirmStripeOrderController);
+router.post("/create", protect, createPayment);
+router.get("/verify", verifyPayment);
 
 export default router;

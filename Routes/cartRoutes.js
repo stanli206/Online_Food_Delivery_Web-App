@@ -6,20 +6,19 @@ import {
   removeCartItemController,
   clearCartController,
 } from "../controllers/cartController.js";
-import { adminOnly } from "../middlewares/authMiddleware.js";
+import { protect } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.use(adminOnly);
 
-router.get("/", getMyCart);
+router.get("/", protect, getMyCart);
 
-router.post("/add", addToCartController);
+router.post("/add", protect, addToCartController);
 
-router.put("/item/:itemId", updateCartItemController);
+router.put("/item/:itemId", protect, updateCartItemController);
 
-router.delete("/item/:itemId", removeCartItemController);
+router.delete("/item/:itemId", protect, removeCartItemController);
 
-router.delete("/clear", clearCartController);
+router.delete("/clear", protect, clearCartController);
 
 export default router;

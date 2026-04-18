@@ -1,10 +1,10 @@
-import express from "express";
 import dotenv from "dotenv";
+dotenv.config();
+import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import connectDB from "./config/db.js";
 import passport, { configurePassport } from "./config/passport.js";
-
 import authRoutes from "./Routes/authRoutes.js";
 import restaurantRoutes from "./Routes/restaurantRoutes.js";
 import menuRoutes from "./Routes/menuRoutes.js";
@@ -14,15 +14,12 @@ import adminOrderRoutes from "./Routes/adminOrderRoutes.js";
 import paymentRoutes from "./Routes/paymentRoutes.js";
 import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 
-dotenv.config();
-
 const app = express();
 
 const isProduction = process.env.NODE_ENV === "production";
 if (isProduction) {
-  app.set("trust proxy", 1); 
+  app.set("trust proxy", 1);
 }
-// DB connect
 connectDB();
 
 const allowedOrigins = process.env.CLIENT_URL.split(",");
@@ -44,9 +41,6 @@ app.use(
 app.use(morgan("dev"));
 app.use(express.json());
 
-// Sessions
-// app.use(sessionConfig());
-// Passport
 configurePassport();
 app.use(passport.initialize());
 

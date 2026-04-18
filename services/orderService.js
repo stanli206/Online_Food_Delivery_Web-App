@@ -1,4 +1,3 @@
-// services/orderService.js
 import Order from "../models/Order.js";
 import Cart from "../models/Cart.js";
 
@@ -11,7 +10,6 @@ export const ORDER_STATUSES = [
   "CANCELLED",
 ];
 
-// Create order from current user's cart
 export const createOrderFromCart = async ({
   userId,
   deliveryAddress,
@@ -25,7 +23,6 @@ export const createOrderFromCart = async ({
     throw error;
   }
 
-  // Snapshot items from cart
   const items = cart.items.map((it) => ({
     menuItemId: it.menuItemId,
     name: it.name,
@@ -44,14 +41,14 @@ export const createOrderFromCart = async ({
     deliveryAddress,
     paymentInfo: {
       method: paymentMethod,
-      status: paymentMethod === "COD" ? "PENDING" : "PENDING", // later payment gateway-la update pannalaam
+      status: paymentMethod === "COD" ? "PENDING" : "PENDING", 
       transactionId: null,
     },
     status: "PLACED",
     totalAmount,
   });
 
-  // Clear cart after order
+  
   await Cart.deleteOne({ _id: cart._id });
 
   return order;
@@ -67,7 +64,6 @@ export const getOrderById = async (orderId) => {
   return order;
 };
 
-// Admin: get all orders (optional filters later)
 export const getAllOrders = async () => {
   const orders = await Order.find({})
     .sort({ createdAt: -1 })
