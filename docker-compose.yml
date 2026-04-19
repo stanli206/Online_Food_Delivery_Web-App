@@ -1,0 +1,10 @@
+services:
+  backend:
+    build: .
+    container_name: food-app-backend
+    ports:
+      - "5001:5000"
+    env_file:
+      - .env
+    restart: always
+  
