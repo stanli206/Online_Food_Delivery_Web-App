@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Deploy to EC2 via SSH
         uses: appleboy/ssh-action@v0.1.10
@@ -21,5 +21,6 @@ jobs:
           script: |
             cd ~/Online_Food_Delivery_Web-App
             git pull origin main
-            npm install
-            pm2 restart all
+            docker-compose down
+            docker-compose up -d --build
+            docker ps
